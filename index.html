@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhanyashree R — Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f2ec;
+    --paper-raised: #ffffff;
+    --ink: #1b211f;
+    --ink-soft: #5a635e;
+    --line: #ddd7c7;
+    --teal: #2c6e68;
+    --teal-deep: #1d4d49;
+    --teal-soft: #e4efed;
+    --amber: #b5791f;
+    --amber-soft: #f3e6cf;
+    --tag-bg: #ece7d8;
+    --shadow: 0 1px 2px rgba(27,33,31,0.04), 0 8px 24px -12px rgba(27,33,31,0.12);
+    --shadow-hover: 0 4px 10px rgba(27,33,31,0.06), 0 20px 40px -16px rgba(44,110,104,0.22);
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14171a;
+      --paper-raised: #1c2023;
+      --ink: #ece8de;
+      --ink-soft: #9aa39d;
+      --line: #2e3437;
+      --teal: #5fb3ac;
+      --teal-deep: #7cc9c2;
+      --teal-soft: #1c2b29;
+      --amber: #d9a95a;
+      --amber-soft: #2b2416;
+      --tag-bg: #23282b;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.4);
+      --shadow-hover: 0 4px 10px rgba(0,0,0,0.3), 0 20px 40px -16px rgba(95,179,172,0.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14171a; --paper-raised: #1c2023; --ink: #ece8de; --ink-soft: #9aa39d;
+    --line: #2e3437; --teal: #5fb3ac; --teal-deep: #7cc9c2; --teal-soft: #1c2b29;
+    --amber: #d9a95a; --amber-soft: #2b2416; --tag-bg: #23282b;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.4);
+    --shadow-hover: 0 4px 10px rgba(0,0,0,0.3), 0 20px 40px -16px rgba(95,179,172,0.25);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--teal-deep); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  svg.ic { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- hero ---------- */
+  header.hero {
+    padding: 60px 0 44px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  @media (max-width: 620px) {
+    header.hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  }
+  .avatar {
+    width: 104px; height: 104px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--amber) 130%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-sans); font-weight: 800; font-size: 2.1rem; color: #f4f2ec;
+    letter-spacing: -0.02em; flex-shrink: 0;
+    box-shadow: var(--shadow);
+  }
+  .prompt-line { font-family: var(--font-mono); font-size: 0.85rem; color: var(--teal); margin: 0 0 10px; }
+  .prompt-line .caret {
+    display: inline-block; width: 8px; height: 1em; background: var(--teal);
+    vertical-align: text-bottom; margin-left: 4px; animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  h1.name {
+    font-weight: 800; font-size: clamp(2rem, 5.5vw, 3rem); margin: 0 0 8px;
+    letter-spacing: -0.02em; line-height: 1.05;
+  }
+  .role-line { font-family: var(--font-mono); font-size: 0.98rem; color: var(--ink-soft); margin: 0 0 20px; }
+  .role-line .sep { color: var(--line); margin: 0 8px; }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 620px) { .contact-row { justify-content: center; } }
+  .icon-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 0.8rem;
+    background: var(--paper-raised); border: 1px solid var(--line);
+    padding: 7px 12px; border-radius: 8px; text-decoration: none; color: var(--ink);
+    box-shadow: var(--shadow); transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  }
+  .icon-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); color: var(--teal-deep); }
+  .icon-link svg.ic { width: 15px; height: 15px; }
+
+  /* ---------- section heads ---------- */
+  .section-intro-row { padding: 44px 0 22px; display: flex; align-items: center; gap: 12px; }
+  .section-icon {
+    width: 34px; height: 34px; border-radius: 9px; background: var(--teal-soft);
+    color: var(--teal-deep); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-head { font-family: var(--font-mono); font-size: 0.76rem; color: var(--teal-deep); margin: 0; }
+  .section-title { font-size: 1.4rem; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+
+  p.summary { max-width: 62ch; font-size: 1.02rem; }
+  .summary-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px;
+    padding: 26px; box-shadow: var(--shadow);
+  }
+
+  /* ---------- skills ---------- */
+  .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 620px) { .skill-grid { grid-template-columns: 1fr; } }
+  .skill-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .skill-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .skill-card-icon {
+    width: 28px; height: 28px; border-radius: 8px; background: var(--amber-soft); color: var(--amber);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .skill-label { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink); margin: 0; font-weight: 600; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    font-family: var(--font-mono); font-size: 0.78rem; background: var(--tag-bg); color: var(--ink);
+    padding: 4px 9px; border-radius: 6px; border: 1px solid var(--line);
+  }
+
+  /* ---------- experience ---------- */
+  .exp-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px;
+    padding: 24px 26px; box-shadow: var(--shadow);
+  }
+  .exp-title { font-weight: 700; font-size: 1.08rem; margin: 0 0 2px; }
+  .exp-meta { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); margin: 0 0 16px; }
+  ul.plain { margin: 0; padding-left: 20px; }
+  ul.plain li { margin-bottom: 7px; }
+  ul.plain li::marker { color: var(--teal); }
+
+  /* ---------- projects ---------- */
+  .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 700px) { .project-grid { grid-template-columns: 1fr; } }
+  .project-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px 24px; box-shadow: var(--shadow);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .project-card-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .project-icon {
+    width: 36px; height: 36px; border-radius: 10px; background: var(--teal-soft); color: var(--teal-deep);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .project-name { font-weight: 700; font-size: 1.04rem; margin: 0 0 4px; }
+  .project-stack { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); }
+  .project-card ul.plain { margin-top: 12px; font-size: 0.94rem; }
+
+  .misc-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px 24px; box-shadow: var(--shadow); margin-top: 18px;
+  }
+  .misc-list { columns: 2; column-gap: 28px; padding: 0; margin: 10px 0 0; list-style: none; }
+  .misc-list li {
+    font-size: 0.92rem; padding: 9px 0; border-top: 1px solid var(--line); break-inside: avoid;
+    display: flex; gap: 8px;
+  }
+  .misc-list li svg.ic { width: 14px; height: 14px; margin-top: 4px; color: var(--amber); }
+  .misc-list li .mp-name { font-weight: 600; }
+  @media (max-width: 640px) { .misc-list { columns: 1; } }
+
+  /* ---------- education ---------- */
+  .edu-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px;
+    padding: 8px 26px; box-shadow: var(--shadow);
+  }
+  .edu-item { display: flex; align-items: center; gap: 14px; padding: 16px 0; }
+  .edu-item + .edu-item { border-top: 1px solid var(--line); }
+  .edu-icon {
+    width: 30px; height: 30px; border-radius: 8px; background: var(--amber-soft); color: var(--amber);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .edu-body { flex: 1; }
+  .edu-name { font-weight: 700; font-size: 0.98rem; }
+  .edu-school { color: var(--ink-soft); font-size: 0.88rem; }
+  .edu-score {
+    font-family: var(--font-mono); font-size: 0.8rem; color: var(--teal-deep);
+    background: var(--teal-soft); padding: 4px 10px; border-radius: 7px; white-space: nowrap;
+  }
+  @media (max-width: 480px) { .edu-item { flex-wrap: wrap; } }
+
+  /* ---------- footer ---------- */
+  footer { margin-top: 50px; padding: 34px 0 60px; }
+  .footer-card {
+    background: linear-gradient(135deg, var(--teal-deep), var(--teal));
+    border-radius: 16px; padding: 34px 30px; color: #f4f2ec;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .footer-cta { font-size: 1.2rem; font-weight: 800; margin: 0 0 4px; }
+  .footer-sub { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; opacity: 0.85; }
+  .footer-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .footer-links a {
+    display: inline-flex; align-items: center; gap: 6px; color: #f4f2ec;
+    background: rgba(244,242,236,0.14); border: 1px solid rgba(244,242,236,0.3);
+    padding: 8px 13px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.8rem;
+    text-decoration: none; transition: background 0.15s ease;
+  }
+  .footer-links a:hover { background: rgba(244,242,236,0.26); }
+
+  ::selection { background: var(--teal); color: var(--paper); }
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-line .caret { animation: none; }
+    html { scroll-behavior: auto; }
+    .project-card, .icon-link { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="avatar">DR</div>
+    <div>
+      <p class="prompt-line">$ whoami<span class="caret"></span></p>
+      <h1 class="name">Dhanyashree R</h1>
+      <p class="role-line">PHP &amp; Python Developer<span class="sep">/</span>2.5 yrs backend &amp; systems<span class="sep">/</span>Mangalore, Karnataka</p>
+      <div class="contact-row">
+        <a class="icon-link" href="mailto:shreedhanya284@gmail.com">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>
+          Email
+        </a>
+        <a class="icon-link" href="tel:+918590695242">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.4.55 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .55 3.4 1 1 0 0 1-.25 1z"/></svg>
+          Call
+        </a>
+        <a class="icon-link" href="https://github.com/DhanyaKulal" target="_blank" rel="noopener">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2-.2 4.5-1 4.5-4.5a3.5 3.5 0 0 0-1-2.5 3.3 3.3 0 0 0-.1-2.5s-.9-.3-3 1a10.4 10.4 0 0 0-5.5 0c-2.1-1.3-3-1-3-1a3.3 3.3 0 0 0-.1 2.5 3.5 3.5 0 0 0-1 2.5c0 3.5 2.5 4.3 4.5 4.5-.4.4-.5 1-.5 1.7V21"/></svg>
+          GitHub
+        </a>
+        <a class="icon-link" href="https://linkedin.com/in/dhanyashree-r-9a1106277" target="_blank" rel="noopener">
+          <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-3a2 2 0 0 1 4 0v3M12 13v3"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-intro-row">
+      <div class="section-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div><p class="section-head">summary</p><h2 class="section-title">What I do</h2></div>
+    </div>
+    <div class="summary-card">
+      <p class="summary" style="margin:0;">I build the backend that a web product actually runs on — PHP and Python
+      services wired to MySQL, third-party APIs, and the occasional IP camera. Most of my work has
+      been fixing, integrating and shipping systems that other people depend on daily: fee collection,
+      admin dashboards, attendance tracking. I'm comfortable owning a feature from database schema
+      to working UI, and I debug things until they stop breaking.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-intro-row">
+      <div class="section-icon"><svg class="ic" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg></div>
+      <div><p class="section-head">skills</p><h2 class="section-title">What I work with</h2></div>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg></div>
+          <p class="skill-label">Expertise</p>
+        </div>
+        <div class="tag-list">
+          <span class="tag">PHP</span><span class="tag">Python</span><span class="tag">Bash Scripting</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M12 20V10M18 20V4M6 20v-4"/></svg></div>
+          <p class="skill-label">Good knowledge</p>
+        </div>
+        <div class="tag-list">
+          <span class="tag">Node.js</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">HTML</span><span class="tag">CSS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg></div>
+          <p class="skill-label">Frameworks &amp; CMS</p>
+        </div>
+        <div class="tag-list">
+          <span class="tag">Flask</span><span class="tag">WordPress</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></div>
+          <p class="skill-label">Tools &amp; platforms</p>
+        </div>
+        <div class="tag-list">
+          <span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">Figma</span><span class="tag">Hostinger</span><span class="tag">cPanel</span><span class="tag">FileZilla</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-intro-row">
+      <div class="section-icon"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+      <div><p class="section-head">experience</p><h2 class="section-title">Where I've worked</h2></div>
+    </div>
+    <div class="exp-card">
+      <p class="exp-title">PHP &amp; Python Developer — Ez Technologies</p>
+      <p class="exp-meta">2.5 years</p>
+      <ul class="plain">
+        <li>Built and maintained web applications in PHP and Python</li>
+        <li>Developed backend features and connected MySQL databases</li>
+        <li>Integrated third-party APIs, including WhatsApp and payment gateways</li>
+        <li>Fixed bugs and improved application performance</li>
+        <li>Worked with a team to deliver project tasks on schedule</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-intro-row">
+      <div class="section-icon"><svg class="ic" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3Z"/></svg></div>
+      <div><p class="section-head">projects</p><h2 class="section-title">Things I've built</h2></div>
+    </div>
+
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-icon"><svg class="ic" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6M9 12h.01M15 12h.01M9 9h.01M15 9h.01"/></svg></div>
+          <div><p class="project-name">Hostel Management System</p><p class="project-stack">PHP · MySQL · AJAX · JavaScript · WhatsApp API · Payment API</p></div>
+        </div>
+        <ul class="plain">
+          <li>Full-stack hostel platform with Aadhaar-based auto-fill and WhatsApp OTP verification</li>
+          <li>Google Pay &amp; PhonePe integration for secure online registration fee collection</li>
+          <li>Admin dashboard for room allocation, occupancy, and user status tracking</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-icon"><svg class="ic" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M12 2 3 7v5c0 5 4 8.5 9 10 5-1.5 9-5 9-10V7l-9-5Z"/></svg></div>
+          <div><p class="project-name">Mind Mechanism Admin Panel</p><p class="project-stack">PHP · MySQL · AJAX · HTML · CSS · JavaScript</p></div>
+        </div>
+        <ul class="plain">
+          <li>Admin panel with role-based controls for managing users and workshops</li>
+          <li>Payment tracking with date-based filters, report generation, and gallery management</li>
+          <li>Complete CRUD operations for user account management</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-icon"><svg class="ic" viewBox="0 0 24 24" style="width:18px;height:18px;"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg></div>
+          <div><p class="project-name">E-Fix Automation System</p><p class="project-stack">PHP · MySQL · Python · HTML · CSS</p></div>
+        </div>
+        <ul class="plain">
+          <li>Integrated Dahua and Hikvision IP cameras for automated vehicle and people counting</li>
+          <li>Voice tracking and attendance management using Python automation</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-icon"><svg class="ic" viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg></div>
+          <div><p class="project-name">DIGI-GRAM Web Application</p><p class="project-stack">Web Technologies · MySQL</p></div>
+        </div>
+        <ul class="plain">
+          <li>Online service platform giving village communities digital access to services</li>
+          <li>Real-time service request tracking for end users</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="misc-card">
+      <p class="skill-label" style="margin:0;">Additional projects</p>
+      <ul class="misc-list">
+        <li><svg class="ic" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><span><span class="mp-name">Tally Integration System</span> — PHP. CSV import/export and UI-based database management.</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><span><span class="mp-name">Bank Mini Project</span> — Python Flask. Core banking operations system.</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><span><span class="mp-name">Face Detection &amp; Emotion Recognition</span> — Python. Computer vision-based detection.</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><span><span class="mp-name">Bike Central</span> — PHP. Purchase and sales records management.</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><span><span class="mp-name">PatentDrawOnline</span> — PHP. Online patent drawing and submission platform.</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><span><span class="mp-name">Badminton Club Management</span> — PHP. Member and activity management system.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-intro-row">
+      <div class="section-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></div>
+      <div><p class="section-head">education</p><h2 class="section-title">Where I studied</h2></div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-item">
+        <div class="edu-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <div class="edu-body"><div class="edu-name">Bachelor of Computer Applications (BCA)</div><div class="edu-school">Govt First Grade College For Women, Mangalore · 2020–2023</div></div>
+        <div class="edu-score">78%</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <div class="edu-body"><div class="edu-name">Pre-University Course (PUC)</div><div class="edu-school">Govt Pre University College, Kanyana · 2018–2020</div></div>
+        <div class="edu-score">88%</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <div class="edu-body"><div class="edu-name">SSLC (10th)</div><div class="edu-school">Govt High School, Kanyana · 2018</div></div>
+        <div class="edu-score">76%</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="languages">
+    <div class="section-intro-row">
+      <div class="section-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M5 8h14M9 3v3M3 21l5-11 5 11M6 16h6M14 5c1 5 2.5 8.5 6 11"/></svg></div>
+      <div><p class="section-head">languages</p><h2 class="section-title">Languages</h2></div>
+    </div>
+    <div class="tag-list">
+      <span class="tag">English</span><span class="tag">Kannada</span><span class="tag">Hindi</span><span class="tag">Tulu</span>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-card">
+      <div>
+        <p class="footer-cta">Open to backend and full-stack roles.</p>
+        <p class="footer-sub">$ status: available</p>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:shreedhanya284@gmail.com"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>Email</a>
+        <a href="tel:+918590695242"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.4.55 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .55 3.4 1 1 0 0 1-.25 1z"/></svg>Call</a>
+        <a href="https://github.com/DhanyaKulal" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2-.2 4.5-1 4.5-4.5a3.5 3.5 0 0 0-1-2.5 3.3 3.3 0 0 0-.1-2.5s-.9-.3-3 1a10.4 10.4 0 0 0-5.5 0c-2.1-1.3-3-1-3-1a3.3 3.3 0 0 0-.1 2.5 3.5 3.5 0 0 0-1 2.5c0 3.5 2.5 4.3 4.5 4.5-.4.4-.5 1-.5 1.7V21"/></svg>GitHub</a>
+        <a href="https://linkedin.com/in/dhanyashree-r-9a1106277" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-3a2 2 0 0 1 4 0v3M12 13v3"/></svg>LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
