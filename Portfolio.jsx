@@ -95,13 +95,19 @@ const education = [
   { name: "SSLC (10th)", school: "Govt High School, Kanyana · 2018", score: "76%" },
 ];
 
-function Avatar({ initials = "DR" }) {
+function Avatar() {
   return (
-    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full flex-shrink-0 shadow-lg flex items-center justify-center text-2xl sm:text-3xl font-extrabold text-[#f4f2ec] bg-gradient-to-br from-[#2c6e68] to-[#b5791f]">
-      {initials}
+    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full flex-shrink-0 shadow-lg overflow-hidden">
+      <img
+        src="/profile.jpg"
+        alt="Profile"
+        className="w-full h-full object-cover"
+      />
     </div>
   );
 }
+
+
 
 function IconLink({ href, icon: Icon, children }) {
   return (
